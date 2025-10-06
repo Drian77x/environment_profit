@@ -10,7 +10,7 @@ services:
       - "5434:5432"  # Mapea el puerto 5433 del host al 5432 del contenedor
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: lestrongpass825948
+      POSTGRES_PASSWORD: ${DB_PASS} 
       # Crea la base de datos automáticamente al inicio
       POSTGRES_DB: environment_profit 
     volumes:
