@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # 1. SERVIDOR DE BASE DE DATOS (PostgreSQL)
+  postgres:
+    image: postgres:latest
+    container_name: environment_profit_db
+    restart: always
+    ports:
+      - "5434:5432"  # Mapea el puerto 5433 del host al 5432 del contenedor
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: lestrongpass825948
+      # Crea la base de datos automáticamente al inicio
+      POSTGRES_DB: environment_profit 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. HERRAMIENTA DE INTERFAZ GRÁFICA (pgAdmin)
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: environment_profit_pgadmin
+    restart: always
+    ports:
+      - "5050:80"  # Mapea el puerto 5050 del host al puerto 80 del contenedor
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@example.com
+      PGADMIN_DEFAULT_PASSWORD: adminpassword # Contraseña para acceder a la interfaz web (no la DB)
+    depends_on:
+      - postgres # Asegura que la DB se inicie primero
+    
+volumes:
+  postgres_data:
